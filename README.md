@@ -1,79 +1,177 @@
-# Autonomous Cooking: Physics-based AI for Universal Food Classification
+# 🔥 Thermal Intelligence Engine: Autonomous Physics-Informed Cooking Platform
 
-This repository contains work for the project **"Universal Physics Spectrum and Anomaly Detection for Autonomous Cooking."**  
-It builds predictive models for food classification and cooking state stability from multi-sensor physics-based time-series and studies how well these models generalise across various food categories.
+**End-to-end AI decision system for precise, zero-shot autonomous cooking.**
 
----
-
-## 1. Dataset
-
-- **Source:** Internal Physics-based sensor data and universal food spectral logs.
-- Cycle-based time-series from multiple sensors:
-  - Thermal profiles, moisture retention levels, density markers, and phase-transition indicators.
-- Three primary labels per cycle:
-  - **Food_Category**, **Cooking_State**, **Anomaly_Flag (0/1)**.
+The **Thermal Intelligence Engine** is an advanced R&D initiative that bridges the gap between thermodynamics and machine learning. Unlike traditional cooking bots that follow static recipes, this system uses Self-Supervised Learning to understand the *physics* of food, constructing a continuous "Universal Food Spectrum" to cook unclassified "mystery" ingredients with high precision.
 
 ---
 
-## 2. Methodology
+## ✨ Features
 
-1. **Data preparation**
-   - Load raw physics sensor streams, align cooking cycles, and join with ground-truth labels into a master data structure.
+### 🔄 End-to-End Physics Pipeline
 
-2. **Feature engineering**
-   - For every sensor & cycle, compute compact **time-domain** and **frequency-domain** features  
-     (mean/std, spectral energy, thermal diffusivity, and moisture band powers).
-   - Concatenate features to form a "Universal Physics Spectrum" tabular matrix.
-
-3. **Modelling Pipeline**
-   - **Pretraining** (`2_pretraining.ipynb`): Trains a physics-informed encoder to learn robust representations of food signatures that generalize across kitchen environments.
-   - **Downstream Tasks** (`3_downstreamtasks.ipynb`): Fine-tunes the model for specific ingredient classification (e.g., protein vs. vegetable).
-   - **Baselines:** Linear regression and single-feature curve fits for temperature/doneness.
-
-4. **Unsupervised analysis**
-   - KMeans and DBSCAN on feature space to identify hidden regimes (e.g., "incipient_burning" state).
-   - Correlation and permutation-importance analyses to determine the most influential physical sensors for cooking stability.
+* **🌌 Universal Food Spectrum** - Utilizes Self-Supervised Learning (SSL) to map ingredients into a continuous latent space based on thermal properties rather than categorical labels.
+* **🌡️ Sensor Fusion Visualization** - Validates synthetic physics data by correlating Temperature (logistic rise), Humidity (sweat curve), and Weight (linear decay) on a single timeline.
+* **🧠 Masked Autoencoder Brain** - Pre-trained on 1000+ simulated sessions to learn the fundamental "grammar" of thermal dynamics before seeing any labels.
+* **🛡️ Safety-Critical Anomaly Detection** - Real-time monitoring logic (MSE Loss) to detect edge cases like "Door Open" events or sensor failures.
+* **🧪 Zero-Shot Inference** - Extrapolates cooking times for "Mystery Objects" using learned polynomial physics laws ($t \propto d^{1.5}$).
 
 ---
 
-## 3. Key Results & Insights
+## 🎯 Key Capabilities
 
-### 3.1 Predictive performance
-
-- **Cooking_State**
-  - Highly predictable using single-feature thermal curve fits, reaching **R² ≈ 0.99**.
-- **Food_Category**
-  - The physics-based encoder provides high accuracy in identifying food states even when visual conditions are obscured (e.g., steam or low light).
-- **Anomaly_Detection**
-  - The system can successfully distinguish between a standard cooking process and a failure state (Anomaly) by identifying deviations in the expected physics waveform.
-  - **Tree-based models on features perform significantly better** than raw sequence models, suggesting the engineered physics features capture the necessary temporal structure for error detection.
-
-### 3.2 Feature importance & regimes
-
-- Permutation importance for **Anomaly_Detection** shows that:
-  - Higher-order statistics of **thermal diffusivity** and **moisture band powers** are more influential than raw mean temperature levels.
-- **Clustering analysis** successfully isolates:
-  - One large "optimal" cooking cluster and a smaller, noisy cluster corresponding to failure states.
-  - Successfully captures cycles in an **incipient degradation regime** (e.g., initial burning) rather than full failure.
+* **Physics-ML Hybrid:** Combines deep learning (Autoencoders) with rigorous thermodynamic equations.
+* **Synthetic Data Engine:** Generates realistic multi-channel time-series data for training.
+* **Latent Space Mapping:** Visualizes how "Mystery Objects" relate to known clusters (e.g., Chicken vs. Steak) in 2D space.
+* **Fail-Safe Architecture:** Verifiable safety gates for autonomous operation.
 
 ---
 
-## 4. Execution Sequence
+## 🚀 Quick Start
 
-To replicate the results, notebooks must be run in the following order:
+### Prerequisites
 
-1. `1_exploration.ipynb`: Initial data visualization and sensor alignment.
-2. `2_pretraining.ipynb`: Model training and weight generation.
-3. `3_downstreamtasks.ipynb`: Performance evaluation and classification.
-4. `4_preferences.ipynb`: Configuration of user thresholds and taste profiles.
-5. `5_anomaly_detection.ipynb`: Final system testing and regime discovery.
+* Python 3.10+
+* Jupyter Notebook / Lab
+* Standard scientific stack (`numpy`, `pandas`, `matplotlib`, `seaborn`)
+* PyTorch (`torch`)
+* Scikit-Learn (`sklearn`)
+
+### 1. Setup Environment
+```bash
+# Clone repository
+git clone https://github.com/yourusername/thermal-intelligence-engine.git
+cd thermal-intelligence-engine
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. File Structure
+
+Ensure your directory is structured as follows for the notebooks to import the `src` modules correctly:
+```
+thermal-intelligence-engine/
+├── notebooks/
+│   ├── 1_exploration.ipynb       # Data Validation
+│   ├── 2_pretraining.ipynb       # Train Autoencoder
+│   ├── 3_finetuning.ipynb        # Downstream Task
+│   ├── 4_latent_space.ipynb      # Visualization
+│   └── 5_final_poc.ipynb         # Mystery Object & Anomalies
+├── src/
+│   └── smartcook/
+│       ├── data_gen.py           # Physics simulation engine
+│       ├── models.py             # PyTorch Autoencoder models
+│       └── utils.py              # Early stopping & helpers
+└── README.md
+```
 
 ---
 
-## 5. Skills Demonstrated
+## 🎯 Usage Guide (Step-by-Step)
 
-- Physics-Informed Machine Learning (PINNs) and universal spectral analysis
-- Time-series signal processing and feature generation for sensor-heavy environments
-- Permutation importance, clustering, and regime discovery for model interpretation
-- Anomaly detection in dynamic, non-linear systems
-- End-to-end ML Pipeline design, from raw data to a deployable encoder
+The project is divided into 5 sequential notebooks demonstrating the full R&D pipeline.
+
+### Step 1: Data Exploration & Sensor Fusion (`1_exploration.ipynb`)
+
+**Goal:** Validate the synthetic physics generator.
+
+* **What it does:** Simulates a single roasting session (Session #101).
+* **Visual Output:** A "Sensor Fusion" plot overlaying Temperature (Red), Humidity (Blue), and Weight (Green) to verify physical realism.
+* **Ground Truth:** Visualizes the transition between Raw, Cooking, and Done stages.
+
+### Step 2: Pretraining the Brain (`2_pretraining.ipynb`)
+
+**Goal:** Teach the AI physics without labels (Self-Supervised Learning).
+
+* **Technique:** Masked Autoencoder (MAE). The model hides 20% of the sensor data and tries to reconstruct it.
+* **Data:** 1000 unlabeled simulated cooking sessions.
+* **Output:** Saves the "Brain" (Encoder weights) to `src/smartcook/pretrained_encoder.pth`.
+
+### Step 3: Fine-Tuning (`3_finetuning.ipynb`)
+
+**Goal:** Apply the learned physics to a specific task (Stage Prediction).
+
+* **Technique:** Loads the pretrained encoder, freezes it, and trains a lightweight classifier on top.
+* **Result:** High accuracy prediction of cooking stages (Raw vs. Done) with minimal labeled data.
+
+### Step 4: The "Food Map" (`4_latent_space.ipynb`)
+
+**Goal:** Visualize how the AI "thinks" about food.
+
+* **Process:** Feeds Chicken, Steak, and "Mystery Objects" into the frozen encoder.
+* **Output:** A PCA 2D Scatter plot.
+* **Insight:** You will see distinct clusters for Chicken and Steak, with "Mystery Objects" finding their own place in the physics spectrum based on density and conductivity.
+
+### Step 5: Final POC (`5_final_poc.ipynb`)
+
+**Goal:** The Venture Demonstration (Everything combined).
+
+1. **Universal Food Map:** Identifies where a specific ingredient sits in the universe of possible physics profiles.
+2. **Physics Extrapolation:** Uses Polynomial Regression to calculate cook time for a mystery object.
+3. **Anomaly Detection:** Simulates a "Door Open" event (Temp drop) and uses the Autoencoder's reconstruction error (MSE) to trigger a "RED ALERT" in real-time.
+
+---
+
+## 📁 Generated Artifacts
+
+The system creates the following during execution:
+
+* **Models:** `src/smartcook/pretrained_encoder.pth` (The saved weights of the self-supervised brain).
+* **Data:** `classification_mock_data` and `physics_simulation_data` are generated on the fly.
+* **Visuals:**
+  * Sensor Fusion Multi-Axis Plot.
+  * Universal Latent Space Projection (2D).
+  * Real-Time Anomaly Score Plot.
+
+---
+
+## ⚙️ Configuration
+
+Key hyperparameters can be adjusted inside the notebooks or `src/config.py`:
+```python
+# AI Configuration
+BATCH_SIZE = 32
+LEARNING_RATE = 0.001
+MAX_EPOCHS = 500
+PATIENCE = 15
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# Physics Constants
+MAX_TEMP = 250.0   # Normalization factor
+MAX_HUMIDITY = 100.0
+MAX_WEIGHT = 1000.0
+```
+
+---
+
+## 🎯 What Makes This Different
+
+❌ **What It's NOT:**
+
+* A recipe database or cookbook app.
+* A simple timer based on weight.
+* A generic image classifier (e.g., "Hotdog / Not Hotdog").
+
+✅ **What It IS:**
+
+* A **First-Principles AI** that understands thermodynamics.
+* A **Zero-Shot** system capable of cooking completely novel ingredients.
+* A **Safety-Critical** architecture designed for autonomous hardware.
+* A **Scientific Tool** for analyzing food material properties.
+
+---
+
+## 📈 Roadmap
+
+* [ ] **Multi-Phase Simulation:** Support for phase changes (melting/boiling) in the physics engine.
+* [ ] **Hardware-in-the-Loop:** Connect to real thermal probes via Serial/UART.
+* [ ] **Reinforcement Learning:** Replace PID controllers with RL agents for optimal heat management.
+
+---
+
+*This project was developed as a Proof of Concept (POC) for advanced industrial automation.*
